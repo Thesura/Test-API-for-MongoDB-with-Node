@@ -12,6 +12,33 @@ users.getAll = async (req, res) => {
       }
 };
 
+users.getById = async (req, res) => {
+      try{
+            const userById = await user.findOne({ _id: req.body._id});
+            res.status(200).json(userById);
+      }catch (error){
+            res.status(400).json({message: error.message});
+      }
+};
+
+users.getByName = async (req, res) => {
+      try{
+            const userByName = await user.findOne({ name: new RegExp(req.body.name, 'i')});
+            res.status(200).json(userByName);
+      }catch (error){
+            res.status(400).json({message: error.message});
+      }
+};
+
+users.getByEmail = async (req, res) => {
+      try{
+            const userByEmail = await user.findOne({ email: new RegExp(req.body.email, 'i')});
+            res.status(200).json(userByEmail);
+      }catch (error){
+            res.status(400).json({message: error.message});
+      }
+};
+
 users.post = async (req, res) => {
       const newUser = new user({
             name: req.body.name,
